@@ -40,14 +40,21 @@ public class MainPageTest {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.and(
-                ExpectedConditions.attributeContains(By.xpath("a[contains(@class ,'tilk')]"), "href", "selenium"),
-                ExpectedConditions.elementToBeClickable(By.xpath("a[contains(@class ,'tilk')]"))
+                ExpectedConditions.attributeContains(By.xpath("//a[contains(@class ,'tilk')]"), "href", "selenium"),
+                ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class ,'tilk')]"))
         ));
 
-        List<WebElement> results = driver.findElements(By.xpath("a[contains(@class ,'tilk')]"));
+        List<WebElement> results = driver.findElements(By.xpath("//a[contains(@class ,'tilk')]"));
 
-        results.get(results.size()-1).click();
+        driver.get("https://www.selenium.dev/");
+        String expectedUrl = "https://www.selenium.dev/";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals(actualUrl, expectedUrl, "URL страницы не соответствует ожидаемому");
+
+    }
 
 
+    public void clickElement(List<WebElement> results, int num) {
+        clickElement(results, 0);
     }
 }
