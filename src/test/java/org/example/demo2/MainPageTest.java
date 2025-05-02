@@ -8,8 +8,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPageTest {
     private WebDriver driver;
@@ -34,7 +38,16 @@ public class MainPageTest {
         searchField.sendKeys(input);
         searchField.submit();
 
-        WebElement searchPageField = driver.findElement(By.cssSelector("#sb_form_q"));
-        assertEquals(input, searchPageField.getAttribute("value"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.attributeContains(By.xpath("a[contains(@class ,'tilk')]"), "href", "selenium"),
+                ExpectedConditions.elementToBeClickable(By.xpath("a[contains(@class ,'tilk')]"))
+        ));
+
+        List<WebElement> results = driver.findElements(By.xpath("a[contains(@class ,'tilk')]"));
+
+        results.get(results.size()-1).click();
+
+
     }
 }
