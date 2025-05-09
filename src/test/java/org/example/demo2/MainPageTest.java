@@ -46,15 +46,18 @@ public class MainPageTest {
 
         List<WebElement> results = driver.findElements(By.xpath("//a[contains(@class ,'tilk')]"));
 
-        driver.get("https://www.selenium.dev/");
+        clickElement(results, 0);
+
+        ArrayList<String> tabs = new ArrayList<> (driver.getWindowHandles());
+        if (tabs.size() > 1) driver.switchTo().window(tabs.get(1));
+
         String expectedUrl = "https://www.selenium.dev/";
         String actualUrl = driver.getCurrentUrl();
-        assertEquals(actualUrl, expectedUrl, "URL страницы не соответствует ожидаемому");
-
+        assertEquals(expectedUrl, actualUrl, "URL страницы не соответствует ожидаемому");
     }
 
-
     public void clickElement(List<WebElement> results, int num) {
-        clickElement(results, 0);
+        results.get(num).click();
+        System.out.println("Произведен клик по первой ссылке результатов поиска");
     }
 }
